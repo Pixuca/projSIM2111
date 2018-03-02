@@ -24,6 +24,7 @@ done = False
 xDirection = random.randint(30, 389) #30, 750 ----  #240 (centro)
 yDirection = random.randint(30, 450) #30, 450 ---- #240 (centro)
 print("Direção em X: %d" % xDirection)
+print("Direção em Y: %d" % yDirection)
 
 def sweepLeft(): #robô à esquerda fazendo varredura para a direita
 	''' *****campo de visão razoavelmente grande*****
@@ -40,13 +41,30 @@ def sweepLeft(): #robô à esquerda fazendo varredura para a direita
 
 	yMod_dir_l1 = 150
 	xMod_dir_l2 = 400
-	line1 = pygame.draw.line(screen, areaColor, (xDirection+20, yDirection+10), (xDirection + xSize_line_1, yDirection - yMod_dir_l1), 1)
-	line2 = pygame.draw.line(screen, areaColor, (xDirection+20, yDirection+10), (xDirection + xMod_dir_l2, yDirection + ySize_line_2), 1)
-	areaLine1 = xDirection
-	areaLine2 = yDirection + ySize_line_2
-	print(line1)
-	'''if (areaLine1 <= xBall and areaLine2 <= yBall):
-		print("Bola avistada")'''
+
+	final_l1_x = xDirection + xSize_line_1
+	final_l1_y  = yDirection - yMod_dir_l1
+
+	final_l2_x = xDirection + xMod_dir_l2
+	final_l2_y = yDirection + ySize_line_2
+
+	if (final_l1_y < 0):
+		while (final_l1_y < 0):
+			count = 1
+			final_l1_y += count
+
+	middle_l1_y = ((yDirection+10) + final_l1_y)/2
+	middle_l2_y = ((yDirection+10) + final_l2_y)/2
+
+	cordaLinha = (255, 0, 0)
+	line1 = pygame.draw.line(screen, areaColor, (xDirection+20, yDirection+10), (final_l1_x, final_l1_y), 1)
+	line2 = pygame.draw.line(screen, areaColor, (xDirection+20, yDirection+10), (final_l2_x, final_l2_y), 1)
+'''	linhaTeste1 = pygame.draw.line(screen, cordaLinha, (0, yDirection), (0, final_l1_x), 1)
+	linhaTeste2 = pygame.draw.line(screen, cordaLinha, (0, yDirection), (0, final_l2_x), 1) '''
+
+	if(middle_l1_y < yBall and middle_l2_y > yBall):
+		print("Bola avistada")
+
 def sweepRight(): #robô à direita fazendo varredura para a esquerda
 	mirrorX1 = xDirection + math.cos(math.radians(180))*(xDirection/2)
 	mirrorY1 = (yDirection+100) + math.sin(math.radians(180))*(yDirection/2)
