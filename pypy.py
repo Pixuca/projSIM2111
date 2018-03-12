@@ -59,9 +59,7 @@ def sweepLeft(): #robô à esquerda fazendo varredura para a direita
 	cordaLinha = (255, 0, 0)
 	line1 = pygame.draw.line(screen, areaColor, (xDirection+20, yDirection+10), (final_l1_x, final_l1_y), 1)
 	line2 = pygame.draw.line(screen, areaColor, (xDirection+20, yDirection+10), (final_l2_x, final_l2_y), 1)
-'''	linhaTeste1 = pygame.draw.line(screen, cordaLinha, (0, yDirection), (0, final_l1_x), 1)
-	linhaTeste2 = pygame.draw.line(screen, cordaLinha, (0, yDirection), (0, final_l2_x), 1) '''
-
+	print("Sua mãe é minha!!")
 	if(middle_l1_y < yBall and middle_l2_y > yBall):
 		print("Bola avistada")
 
