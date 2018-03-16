@@ -12,6 +12,8 @@ done = False
 
 '''-----------------------------------------------
 
+	***Valores da variável 'xDirection'***
+
 	389, 750 para o robô sempre aparecer à direita
 	30, 389 para o robô sempre aparecer à esquerda
 	30, 750 para o robô ter possibilidade de aparecer nos dois lados do campo
@@ -19,18 +21,56 @@ done = False
 ------------------------------------------------'''
 
 #direção de spawn do robô em X e Y
-xDirection = random.randint(389, 750) #30, 750
-yDirection = random.randint(30, 450)
+xDirection = random.randint(30, 389) #30, 750 ----  #240 (centro)
+yDirection = random.randint(30, 450) #30, 450 ---- #240 (centro)
+print("Direção em X: %d" % xDirection)
+print("Direção em Y: %d" % yDirection)
 
 
 def sweepLeft(): #robô à esquerda fazendo varredura para a direita
-	pygame.draw.line(screen, areaColor, (xDirection+30, yDirection+30), (xDirection+60, yDirection+60), 1)
+	''' *****campo de visão razoavelmente grande*****
+			line1 - xDirection (end) += 400 == xSize_line_1
+					yDirection (end) -=150  == xMod_dir_l1
+
+			line2 - xDirection (end) += 400 == xMod_dir_l2
+			      - yDirection (end) += 150 == ySize_line_2
+		*****---------------------------------******
+	'''
+	#valores abaixo para campo de visão extra grande
+	xSize_line_1 = 400 #500
+	ySize_line_2 = 150 #250
+
+	yMod_dir_l1 = 150
+	xMod_dir_l2 = 400
+
+	final_l1_x = xDirection + xSize_line_1
+	final_l1_y  = yDirection - yMod_dir_l1
+
+	final_l2_x = xDirection + xMod_dir_l2
+	final_l2_y = yDirection + ySize_line_2
+
+	if (final_l1_y < 0):
+		while (final_l1_y < 0):
+			count = 1
+			final_l1_y += count
+
+	middle_l1_y = ((yDirection+10) + final_l1_y)/2
+	middle_l2_y = ((yDirection+10) + final_l2_y)/2
+
+	cordaLinha = (255, 0, 0)
+	line1 = pygame.draw.line(screen, areaColor, (xDirection+20, yDirection+10), (final_l1_x, final_l1_y), 1)
+	line2 = pygame.draw.line(screen, areaColor, (xDirection+20, yDirection+10), (final_l2_x, final_l2_y), 1)
+	print("Sua mãe é minha!!")
+	if(middle_l1_y < yBall and middle_l2_y > yBall):
+		print("Bola avistada")
+
 def sweepRight(): #robô à direita fazendo varredura para a esquerda
 	mirrorX1 = xDirection + math.cos(math.radians(180))*(xDirection/2)
 	mirrorY1 = (yDirection+100) + math.sin(math.radians(180))*(yDirection/2)
 	mirrorY2 = (yDirection-100) + math.sin(math.radians(180))*(yDirection/2)
-	line1 = pygame.draw.line(screen, areaColor, (mirrorX1+99, mirrorY1), (xDirection, yDirection+10), 1)
-	line2 = pygame.draw.line(screen, areaColor, (mirrorX1+99, mirrorY2), (xDirection, yDirection+10), 1)
+	line1 = pygame.draw.line(screen, areaColor, (mirrorX1-200, mirrorY1+150), (xDirection, yDirection+10), 1)
+	line2 = pygame.draw.line(screen, areaColor, (mirrorX1-200, mirrorY2-150), (xDirection, yDirection+10), 1)
+
 while not done:
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_q:
