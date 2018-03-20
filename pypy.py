@@ -21,25 +21,52 @@ done = False
 #direção de spawn do robô em X e Y
 xDirection = random.randint(389, 750) #30, 750
 yDirection = random.randint(30, 450)
-xBall, yBall = 390, 245
 
 
-def sweep():
-	if ((colision.x - xBall) <= colision.diametro):
-		print("Estou vendo a bola! Minha distância até ela é de X = %d" % ((colision.x - xBall)))
 
-	if(robot.x > xBall + 5):
+def sweepRight():
+	if ((colision.x - bola.x) <= colision.diametro):
+		print("Estou vendo a bola! Minha distância até ela é de X = %d" % ((colision.x - bola.x)))
+	if(robot.x > bola.x + 5):
 		robot.x -= 1
 		colision.x -= 1
 		kick.x -= 1
 
+	if(robot.y > bola.y - 10):
+		robot.y -= 1
+		colision.y -= 1
+		kick.y -= 1
+	elif (robot.y < bola.y - 10):
+		robot.y += 1
+		colision.y += 1
+		kick.y += 1
+
+	if (colision.x - bola.x <= 15 and colision.y - bola.y <= 15):
+		forca = random.randint(20, 40)
+		chance = random.randint(0, 1)
+		if (chance == 0):
+			bola.x += forca
+			bola.y += forca
+		else:
+			bola.x -= forca
+			bola.y -= forca
+
+def sweepLeft():
+	if ((colision.x + bola.x) <= colision.diametro):
+		print("Estou vendo a bola! Minha distância até ela é de X = %d" % ((colision.x + bola.x)))
+	if (robot.x < bola.x+5):
+		robot.x += 1
+		colision.x += 1
+		kick.x += 1
 
 while not done:
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_q:
 			done = True
-		sweep()
-
+		if bola.x >= 390:
+			sweepRight()
+		elif bola.x < 390:
+			sweepLeft()
 	screen.fill((0, 0, 0))
 	color = (255, 102, 0)
 	robColor = (0, 0, 255)
@@ -49,7 +76,7 @@ while not done:
 
 	colisionRange = pygame.draw.circle(screen, colision.colisionColor, (colision.x, colision.y), colision.diametro, colision.espessura)
 	kickRange = pygame.draw.circle(screen, kick.kickColor, (kick.x, kick.y), kick.diametro, kick.espessura)
-	ball = pygame.draw.circle(screen, color, (xBall, yBall), 5)
+	ball = pygame.draw.circle(screen, color, (bola.x, bola.y), bola.espessura)
 	robot = pygame.draw.rect(screen, robColor, pygame.Rect(robot.x, robot.y, 20, 20))
 	goal2 = pygame.draw.rect(screen, golColor, pygame.Rect(745, 223.5, 1, 50)) #gol da direita
 	goal1 = pygame.draw.rect(screen, golColor, pygame.Rect(33, 223.5, 1, 50)) #gol da esquerda

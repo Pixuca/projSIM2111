@@ -19,3 +19,7 @@ class kick:
     kickColor = (255, 255, 0)
     diametro = 20
     espessura = 1
+class bola:
+    x = 390
+    y = 245
+    espessura = 5
