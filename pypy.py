@@ -22,38 +22,56 @@ done = False
 xDirection = random.randint(389, 750) #30, 750
 yDirection = random.randint(30, 450)
 
-
-
+x, y = 750/9, 450/6
+distT = (x + y)/2
+print("A cada %.2f pixels se tem 1 (um) metro. " % distT)
+distancia = (robot.x - bola.x) + (robot.y - bola.y)
+print("Distância (em pixels): %d" % distancia)
+if (robot.x < bola.x):
+	if (robot.y > bola.y):
+		distancia = (bola.x - robot.x) + (robot.y - bola.y)
+		print("Distância (em pixels): %d" % distancia)
+		distanciaT = distancia/distT
+		print("Distância (em metros): %.2fm" % distanciaT)
 def sweepRight():
+	if (robot.x > bola.x):
+		if (robot.y > bola.y):
+			distancia = (robot.x - bola.x) + (robot.y - bola.y)
+			distanciaT = distancia/distT
+			print("Distância (em metros): %.2f" % distanciaT)
+		elif (robot.y < bola.y):
+			distancia = (robot.x - bola.x) + (bola.y - robot.y)
+			distanciaTotal = distancia/distT
+			print("Distância (em metros): %.2f" % distanciaTotal)
 	if(robot.x > bola.x + 5):
 		robot.x -= 1
 		colision.x -= 1
 		kick.x -= 1
+		time.sleep(0.007)
 
 	if(robot.y > bola.y - 10):
 		robot.y -= 1
 		colision.y -= 1
 		kick.y -= 1
+		time.sleep(0.007)
 	elif (robot.y < bola.y - 10):
 		robot.y += 1
 		colision.y += 1
 		kick.y += 1
-
+		time.sleep(0.007)
 	if (colision.x - bola.x <= 15 and colision.y - bola.y <= 15):
 		forca = random.randint(40, 100)
-		vel = forca
 		chance = random.randint(0, 2)
-		print(chance)
 		if (chance == 0):
-			bola.x -= forca
-			bola.y += forca
+				bola.x -= 1
+				bola.y += 1
 		elif (chance == 1):
-			bola.x -= forca
-			bola.y -= forca
+				bola.x -= 1
+				bola.y -= 1
 		elif (chance == 2):
-			bola.x -= forca
-		while vel >= 0:
-			vel -= 1
+				bola.x -= 1
+
+
 def sweepLeft():
 	if ((colision.x + bola.x) <= colision.diametro):
 		print("Estou vendo a bola! Minha distância até ela é de X = %d" % ((colision.x + bola.x)))
