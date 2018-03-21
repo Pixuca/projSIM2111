@@ -25,9 +25,6 @@ yDirection = random.randint(30, 450)
 
 
 def sweepRight():
-	if ((colision.x - bola.x) <= colision.diametro):
-		print("Estou vendo a bola! Minha distância até ela é de X = %d" % ((colision.x - bola.x)))
-		time.sleep(0.02)
 	if(robot.x > bola.x + 5):
 		robot.x -= 1
 		colision.x -= 1
@@ -69,9 +66,9 @@ while not done:
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_q:
 			done = True
-		if bola.x >= 390:
+		if robot.x > bola.x:
 			sweepRight()
-		elif bola.x < 390:
+		elif robot.x < bola.x:
 			sweepLeft()
 	screen.fill((0, 0, 0))
 	color = (255, 102, 0)
