@@ -63,13 +63,13 @@ def sweepRight():
 		forca = random.randint(40, 100)
 		chance = random.randint(0, 2)
 		if (chance == 0):
-				bola.x -= 1
-				bola.y += 1
+				bola.x -= forca
+				bola.y += forca
 		elif (chance == 1):
-				bola.x -= 1
-				bola.y -= 1
+				bola.x -= forca
+				bola.y -= forca
 		elif (chance == 2):
-				bola.x -= 1
+				bola.x -= forca
 
 
 def sweepLeft():
