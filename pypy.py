@@ -27,6 +27,7 @@ yDirection = random.randint(30, 450)
 def sweepRight():
 	if ((colision.x - bola.x) <= colision.diametro):
 		print("Estou vendo a bola! Minha distância até ela é de X = %d" % ((colision.x - bola.x)))
+		time.sleep(0.02)
 	if(robot.x > bola.x + 5):
 		robot.x -= 1
 		colision.x -= 1
@@ -42,15 +43,20 @@ def sweepRight():
 		kick.y += 1
 
 	if (colision.x - bola.x <= 15 and colision.y - bola.y <= 15):
-		forca = random.randint(20, 40)
-		chance = random.randint(0, 1)
+		forca = random.randint(40, 100)
+		vel = forca
+		chance = random.randint(0, 2)
+		print(chance)
 		if (chance == 0):
-			bola.x += forca
+			bola.x -= forca
 			bola.y += forca
-		else:
+		elif (chance == 1):
 			bola.x -= forca
 			bola.y -= forca
-
+		elif (chance == 2):
+			bola.x -= forca
+		while vel >= 0:
+			vel -= 1
 def sweepLeft():
 	if ((colision.x + bola.x) <= colision.diametro):
 		print("Estou vendo a bola! Minha distância até ela é de X = %d" % ((colision.x + bola.x)))
