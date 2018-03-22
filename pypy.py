@@ -2,7 +2,9 @@ import pygame
 import random
 import time
 import math
+from trajetoria import *
 from classes import *
+
 
 pygame.init()
 bg = "field.png"
@@ -17,10 +19,6 @@ done = False
 	30, 750 para o robô ter possibilidade de aparecer nos dois lados do campo
 
 ------------------------------------------------'''
-
-#direção de spawn do robô em X e Y
-xDirection = random.randint(389, 750) #30, 750
-yDirection = random.randint(30, 450)
 
 x, y = 750/9, 450/6
 distT = (x + y)/2

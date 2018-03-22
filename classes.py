@@ -1,10 +1,11 @@
 import random
+from trajetoria import *
 class robot:
     x = random.randint(389, 750)
+    x2 = trajX[0]
     y = random.randint(30, 450)
     espessura = 20
     largura = 20
-
 
 class colision:
     x = robot.x + 10
