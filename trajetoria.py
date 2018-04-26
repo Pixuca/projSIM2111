@@ -1,16 +1,24 @@
-arquivo = open("v.txt", "r")
-arquivoX = open("xConvertido.txt", "r")
-arquivoY = open("yConvertido.txt", "r")
-trajT = []
-trajX = []
-trajY = []
-for line in arquivo:
-    a, b, c = line.split()
-    trajT.append(a)
-arquivo.close()
-for line in arquivoX:
-    i = line.split()
-    trajX.append(i)
-for line in arquivoY:
-    j = line.split()
-    trajY.append(j)
+fileT = open("t.txt", "r")
+fileX = open("x.txt", "r")
+fileY = open("y.txt", "r")
+t = []
+xi = []
+yi = []
+
+for i in range(1001):
+    a = fileT.readline()
+    a = a.replace('\n', '')
+    b = float(a)
+    t.append(b)
+
+for i in range(1001):
+    a = fileX.readline()
+    a = a.replace('\n', '')
+    b = float(a)
+    xi.append(b)
+
+for i in range(1001):
+    a = fileY.readline()
+    a = a.replace('\n', '')
+    b = float(a)
+    yi.append(b)
