@@ -2,26 +2,14 @@ import random
 from trajetoria import *
 
 class robot:
-    x = random.randint(450, 900)
-    y = random.randint(0, 600)
+    x = random.uniform(xi[0], xi[103])
+    y = random.uniform(yi[0], yi[65])
     espessura = 20
     largura = 20
 
-class colision:
-    x = robot.x + 10
-    y = robot.y + 10
-    colisionColor = (255, 0, 0)
-    diametro = 250
-    espessura = 1
 
-class kick:
-    x = robot.x + 10
-    y = robot.y + 10
-    kickColor = (255, 255, 0)
-    diametro = 20
-    espessura = 1
 class bola:
-    espessura = 5
-    x = random.randint(0, 900)
-    y = random.randint(0, 600)
+    espessura = 10
+    x = xi
+    y = yi
     color = (255, 102, 0)

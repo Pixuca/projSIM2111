@@ -14,11 +14,11 @@ for i in range(1001):
 for i in range(1001):
     a = fileX.readline()
     a = a.replace('\n', '')
-    b = float(a)
+    b = float(a)*100
     xi.append(b)
 
 for i in range(1001):
     a = fileY.readline()
     a = a.replace('\n', '')
-    b = float(a)
+    b = float(a)*100
     yi.append(b)
