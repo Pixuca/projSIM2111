@@ -26,6 +26,15 @@ if (robot.x < xi[0]):
 		print("Distância (em pixels): %dp" % distancia)
 		distanciaT = distancia/distT
 		print("Distância (em metros): %.2fm" % distanciaT)
+
+#dados do robo
+acel1 = 0
+acel2 = 0.1
+vmax = 2.3
+vi = 0
+#---------
+
+
 def sweepRight():
 	if (robot.x > xi[0]):
 		if (robot.y > yi[0]):
@@ -137,19 +146,36 @@ def sweepLeft():
 
 while not done:
 	robColor = (0, 0, 255)
-
 	animationTimer = pygame.time.Clock()
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_q:
 			done = True
 
-
 	screen.fill((0, 0, 0))
-	screen.blit(background, (0, 0))
+	for i in range(1001):
+		xk = xi[i]
+		yk = yi[i]
+
+	print(yk)
+	time.sleep(2)
+
 	for i in range(1001):
 		screen.blit(background, (0, 0))
-		pygame.draw.rect(screen, bola.color, pygame.Rect(xi[i], yi[i], bola.espessura, bola.espessura))
+		xk2 = xi[i]
+		yk2 = yi[i]
+		pygame.draw.rect(screen, bola.color, pygame.Rect(xk2, yk2, bola.espessura, bola.espessura))
 		pygame.draw.rect(screen, robColor, pygame.Rect(robot.x, robot.y, 20, 20))
-		if (robot.x > xi[i]):
-
-		pygame.display.update()
+		if robot.x < xk:
+			vi += acel2
+			robot.x += vi
+			if (robot.x > 760):
+				robot.x = 760
+			if (vi > vmax):
+				vi = vmax
+		if robot.y > yk:
+			robot.y -= vmax
+		if robot.y < yk2:
+			robot.y += vmax
+		if xk2 == robot.x - 5:
+			xk2 = robot.x - 5
+		pygame.display.flip()
