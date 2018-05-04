@@ -13,3 +13,7 @@ class bola:
     x = xi
     y = yi
     color = (255, 102, 0)
+
+class newtraj:
+    x = []
+    y = []

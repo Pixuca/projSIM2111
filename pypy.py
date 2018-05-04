@@ -10,14 +10,11 @@ pygame.init()
 bg = "field2.jpeg"
 screen = pygame.display.set_mode((900, 600))
 background = pygame.image.load(bg).convert()
-
-ball_pos = (xi[0], yi[0])
 done = False
 
 
 x, y = 900/9, 600/6
 distT = (x + y)/2
-print("A cada %.2f pixels se tem 1 (um) metro. " % distT)
 distancia = (robot.x - xi[0]) + (robot.y - yi[0])
 print("Distância (em pixels): %dp" % distancia)
 if (robot.x < xi[0]):
@@ -30,7 +27,7 @@ if (robot.x < xi[0]):
 #dados do robo
 acel1 = 0
 acel2 = 0.1
-vmax = 2.3
+vmax = 2.4
 vi = 0
 #---------
 
@@ -88,21 +85,25 @@ def sweepRight():
 	if (robot.x <= 0):
 		robot.x = 0
 
-def sweepLeft():
-	if (xi[0] > robot.x):
-		if (robot.y > yi[0]):
-			distancia = (xi[0] - robot.x) + (robot.y - yi[0])
+def sweepLeft(i, vi):
+	if (xi[i] > robot.x):
+		if (robot.y > yi[i]):
+			distancia = (xi[i] - robot.x) + (robot.y - yi[i])
 			distanciaT = distancia/distT
 			print("Distância: %.2fm" % distanciaT)
-		elif (robot.y < yi[0]):
-			distancia = (xi[0] - robot.x) + (yi[0] - robot.y)
+		elif (robot.y < yi[i]):
+			distancia = (xi[i] - robot.x) + (yi[i] - robot.y)
 			distanciaTotal = distancia/distT
 			print("Distância: %.2fm" % distanciaTotal)
 
 
 	#parte da movimentação do lado esqurdo do campo
-	if (robot.x < xi[0] - 20):
-		robot.x += 2
+	if (robot.x < xi[i] - 20):
+		for vi in range (vmax):
+			vi += acel2
+			if (vi > vmax):
+				vi = vmax
+		robot.x += vmax
 
 	if (robot.y < yi[0] - 10):
 		robot.y += 2
@@ -153,29 +154,58 @@ while not done:
 
 	screen.fill((0, 0, 0))
 	for i in range(1001):
+		screen.blit(background, (0, 0))
 		xk = xi[i]
 		yk = yi[i]
 
-	print(yk)
-	time.sleep(2)
 
-	for i in range(1001):
+
+	for i in range(len(xi)):
 		screen.blit(background, (0, 0))
-		xk2 = xi[i]
-		yk2 = yi[i]
-		pygame.draw.rect(screen, bola.color, pygame.Rect(xk2, yk2, bola.espessura, bola.espessura))
+		bola.x = xi[i]
+		bola.y = yi[i]
 		pygame.draw.rect(screen, robColor, pygame.Rect(robot.x, robot.y, 20, 20))
-		if robot.x < xk:
+		ball = pygame.draw.rect(screen, bola.color, pygame.Rect(bola.x, bola.y, bola.espessura, bola.espessura))
+		if (robot.x < bola.x):
+			if (robot.y > bola.y):
+				distancia = (bola.x - robot.x) + (robot.y - bola.y)
+				distanciaT = distancia/distT
+				print("Distância: %.2fm" % distanciaT)
+			elif (robot.y < bola.y):
+				distancia = (bola.x - robot.x) + (bola.y - robot.y)
+				distanciaTotal = distancia/distT
+				print("Distância: %.2fm" % distanciaTotal)
 			vi += acel2
-			robot.x += vi
-			if (robot.x > 760):
-				robot.x = 760
 			if (vi > vmax):
 				vi = vmax
-		if robot.y > yk:
-			robot.y -= vmax
-		if robot.y < yk2:
-			robot.y += vmax
-		if xk2 == robot.x - 5:
-			xk2 = robot.x - 5
-		pygame.display.flip()
+				acel2 = acel1
+				print(vi)
+			robot.x += vi
+			if (robot.x > 880):
+				robot.x = 880
+			pygame.display.flip()
+		if (robot.x > bola.x):
+			vi += acel2
+			if (vi > vmax):
+				acel2 = acel1
+				print(vi)
+			robot.x -= vi
+			pygame.display.flip()
+
+		if (robot.y > bola.y):
+			vi += acel2
+			if (vi > vmax):
+				vi = vmax
+				acel2 = acel1
+				print(vi)
+			robot.y -= vi
+			pygame.display.flip()
+		if (robot.y < bola.y):
+			vi += acel2
+			if (vi > vmax):
+				vi = vmax
+				acel2 = acel1
+				print(vi)
+			robot.y += vi
+			pygame.display.flip()
+		print(robot.x, bola.x)
